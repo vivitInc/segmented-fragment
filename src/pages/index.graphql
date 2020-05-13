@@ -1,0 +1,7 @@
+query Index {
+  search(query: "github", first: 10, type: REPOSITORY) {
+    nodes {
+      ...Repos
+    }
+  }
+}

@@ -1,0 +1,15 @@
+schema: schema/index.graphql
+documents:
+  - src/**/*.graphql
+generates:
+  src/graphql/index.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      reactApolloVersion: 3
+      apolloReactHooksImportFrom: "@apollo/react-hooks"
+      withHOC: false
+      withComponent: false
+      withHooks: true

@@ -1,15 +1,30 @@
 {
   "name": "segmented-fragment",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "^3.0.0-beta.44",
+    "@apollo/react-hooks": "^3.1.5",
+    "apollo-boost": "^0.4.8",
+    "graphql": "^15.0.0",
+    "graphql-anywhere": "^4.2.7",
     "next": "9.4.0",
+    "next-with-apollo": "^5.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.5",
+    "@graphql-codegen/typescript": "^1.13.5",
+    "@graphql-codegen/typescript-operations": "^1.13.5",
+    "@graphql-codegen/typescript-react-apollo": "^1.13.5",
+    "@types/node": "^14.0.1",
+    "@types/react": "^16.9.35",
+    "typescript": "^3.9.2"
   }
 }

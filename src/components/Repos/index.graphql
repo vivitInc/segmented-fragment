@@ -1,0 +1,5 @@
+fragment Repos on Repository {
+  id
+  nameWithOwner
+  updatedAt
+}
