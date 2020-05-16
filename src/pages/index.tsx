@@ -17,7 +17,7 @@ export default () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Repos data={filter<ReposFragment[]>(ReposFragmentDoc, nodes)} />
+        <Repos repos={filter<ReposFragment[]>(ReposFragmentDoc, nodes)} />
       </div>
     </>
   );
