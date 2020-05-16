@@ -1,3 +1,9 @@
+fragment SearchResult on SearchResultItemConnection {
+  nodes {
+    ...Repos
+  }
+}
+
 fragment Repos on Repository {
   id
   nameWithOwner

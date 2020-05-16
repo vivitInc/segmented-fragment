@@ -19862,6 +19862,14 @@ export type ViewerHovercardContext = HovercardContext & {
 };
 
 
+export type SearchResultFragment = (
+  { __typename?: 'SearchResultItemConnection' }
+  & { nodes?: Maybe<Array<Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
+    { __typename?: 'Repository' }
+    & ReposFragment
+  ) | { __typename?: 'User' }>>> }
+);
+
 export type ReposFragment = (
   { __typename?: 'Repository' }
   & Pick<Repository, 'id' | 'nameWithOwner' | 'updatedAt'>
@@ -19874,10 +19882,7 @@ export type IndexQuery = (
   { __typename?: 'Query' }
   & { search: (
     { __typename?: 'SearchResultItemConnection' }
-    & { nodes?: Maybe<Array<Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
-      { __typename?: 'Repository' }
-      & ReposFragment
-    ) | { __typename?: 'User' }>>> }
+    & SearchResultFragment
   ) }
 );
 
@@ -19888,15 +19893,20 @@ export const ReposFragmentDoc = gql`
   updatedAt
 }
     `;
-export const IndexDocument = gql`
-    query Index {
-  search(query: "github", first: 10, type: REPOSITORY) {
-    nodes {
-      ...Repos
-    }
+export const SearchResultFragmentDoc = gql`
+    fragment SearchResult on SearchResultItemConnection {
+  nodes {
+    ...Repos
   }
 }
     ${ReposFragmentDoc}`;
+export const IndexDocument = gql`
+    query Index {
+  search(query: "github", first: 10, type: REPOSITORY) {
+    ...SearchResult
+  }
+}
+    ${SearchResultFragmentDoc}`;
 
 /**
  * __useIndexQuery__
