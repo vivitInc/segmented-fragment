@@ -19862,15 +19862,18 @@ export type ViewerHovercardContext = HovercardContext & {
 };
 
 
-export type SearchResultFragment = (
-  { __typename?: 'SearchResultItemConnection' }
-  & { nodes?: Maybe<Array<Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
-    { __typename?: 'Repository' }
-    & ReposFragment
-  ) | { __typename?: 'User' }>>> }
+export type ReposFragment = (
+  { __typename?: 'Query' }
+  & { search: (
+    { __typename?: 'SearchResultItemConnection' }
+    & { nodes?: Maybe<Array<Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
+      { __typename?: 'Repository' }
+      & NodesFragment
+    ) | { __typename?: 'User' }>>> }
+  ) }
 );
 
-export type ReposFragment = (
+export type NodesFragment = (
   { __typename?: 'Repository' }
   & Pick<Repository, 'id' | 'nameWithOwner' | 'updatedAt'>
 );
@@ -19880,33 +19883,30 @@ export type IndexQueryVariables = {};
 
 export type IndexQuery = (
   { __typename?: 'Query' }
-  & { search: (
-    { __typename?: 'SearchResultItemConnection' }
-    & SearchResultFragment
-  ) }
+  & ReposFragment
 );
 
-export const ReposFragmentDoc = gql`
-    fragment Repos on Repository {
+export const NodesFragmentDoc = gql`
+    fragment Nodes on Repository {
   id
   nameWithOwner
   updatedAt
 }
     `;
-export const SearchResultFragmentDoc = gql`
-    fragment SearchResult on SearchResultItemConnection {
-  nodes {
-    ...Repos
+export const ReposFragmentDoc = gql`
+    fragment Repos on Query {
+  search(query: "github", first: 10, type: REPOSITORY) {
+    nodes {
+      ...Nodes
+    }
   }
 }
-    ${ReposFragmentDoc}`;
+    ${NodesFragmentDoc}`;
 export const IndexDocument = gql`
     query Index {
-  search(query: "github", first: 10, type: REPOSITORY) {
-    ...SearchResult
-  }
+  ...Repos
 }
-    ${SearchResultFragmentDoc}`;
+    ${ReposFragmentDoc}`;
 
 /**
  * __useIndexQuery__

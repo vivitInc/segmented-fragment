@@ -1,12 +1,12 @@
 import * as React from "react";
-import { ReposFragment, SearchResultFragment } from "../../graphql";
+import { NodesFragment, ReposFragment } from "../../graphql";
 
 type Props = {
-  result: SearchResultFragment;
+  result: ReposFragment;
 };
 
 export const Repos = ({ result }: Props) => {
-  const repos = result.nodes as ReposFragment[];
+  const repos = result.search.nodes as NodesFragment[];
   const list = repos.map((repo) => (
     <tr key={repo.id}>
       <td>{repo.nameWithOwner}</td>

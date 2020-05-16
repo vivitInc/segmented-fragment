@@ -1,10 +1,12 @@
-fragment SearchResult on SearchResultItemConnection {
-  nodes {
-    ...Repos
+fragment Repos on Query {
+  search(query: "github", first: 10, type: REPOSITORY) {
+    nodes {
+      ...Nodes
+    }
   }
 }
 
-fragment Repos on Repository {
+fragment Nodes on Repository {
   id
   nameWithOwner
   updatedAt
